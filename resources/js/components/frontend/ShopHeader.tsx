@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import {
   ShoppingBag,
@@ -277,7 +275,7 @@ export default function NavBarOne() {
                           className="grid grid-cols-[80px_1fr] gap-4"
                         >
                           <div className="aspect-square overflow-hidden rounded-md bg-slate-50">
-                            <image
+                            <img
                               src={item.image || "/placeholder.svg"}
                               alt={item.name}
                               width={80}

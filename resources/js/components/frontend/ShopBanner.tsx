@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect, useCallback, useRef, JSX } from "react";
 import {
   ChevronLeft,
@@ -107,6 +105,17 @@ export default function ShopBanner(): JSX.Element {
   const slideDuration = 8000; // 8 seconds per slide
   const animationDuration = 700; // 700ms for transitions
 
+  // Navigation functions
+  const goToSlide = useCallback(
+    (index: number): void => {
+      if (isAnimating) return;
+      setIsAnimating(true);
+      setCurrentSlide(index);
+      setTimeout(() => setIsAnimating(false), animationDuration);
+    },
+    [isAnimating]
+  );
+
   // Reset timer when slide changes
   useEffect(() => {
     setProgress(0);
@@ -135,6 +144,11 @@ export default function ShopBanner(): JSX.Element {
     };
   }, [currentSlide, isHovering, slideDuration]);
 
+   const goToNextSlide = useCallback((): void => {
+    const newIndex = (currentSlide + 1) % slideCount;
+    goToSlide(newIndex);
+  }, [currentSlide, goToSlide, slideCount]);
+
   // Auto-advance the carousel
   useEffect(() => {
     if (autoPlayRef.current) {
@@ -154,31 +168,17 @@ export default function ShopBanner(): JSX.Element {
     };
   }, [currentSlide, isAnimating, isHovering]);
 
-  // Navigation functions
-  const goToSlide = useCallback(
-    (index: number): void => {
-      if (isAnimating) return;
-      setIsAnimating(true);
-      setCurrentSlide(index);
-      setTimeout(() => setIsAnimating(false), animationDuration);
-    },
-    [isAnimating]
-  );
 
   const goToPrevSlide = useCallback((): void => {
     const newIndex = (currentSlide - 1 + slideCount) % slideCount;
     goToSlide(newIndex);
   }, [currentSlide, goToSlide, slideCount]);
 
-  const goToNextSlide = useCallback((): void => {
-    const newIndex = (currentSlide + 1) % slideCount;
-    goToSlide(newIndex);
-  }, [currentSlide, goToSlide, slideCount]);
 
   return (
     <section
       className="relative w-full overflow-hidden h-screen max-h-[400px] min-h-[100px] w-full
-                overfolow-hidden border-2 mt-8 border-gray-300 rounded-4xl shadow"
+                overfolow-hidden border-2 mt-8 border-gray-300 rounded-2xl shadow"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
