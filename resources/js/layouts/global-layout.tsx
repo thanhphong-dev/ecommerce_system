@@ -2,16 +2,19 @@ import ShopFooter from "@/components/frontend/ShopFooter";
 import ShopHeader from "@/components/frontend/ShopHeader";
 import { ThemeProvider } from "@/components/theme-provider";
 import React, { ReactNode } from "react";
-import GlobalLayout from "./global-layout";
 
-export default function ShopLayout({ children }: { children: ReactNode }) {
+export default function GlobalLayout({ children }: { children: ReactNode }) {
     return (
         <div>
-            <GlobalLayout>
-                <ShopHeader />
+            <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+            >
                 {children}
-                <ShopFooter />
-            </GlobalLayout>
+            </ThemeProvider>
+
         </div>
     );
 }

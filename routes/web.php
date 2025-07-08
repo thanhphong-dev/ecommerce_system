@@ -13,8 +13,11 @@ Route::get('/products/detail', [ProductController::class,'detail'])->name('produ
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
+        return Inertia::render('dashboard/index');
     })->name('dashboard');
+
+    Route::get('/products', [ProductController::class,'index'])->name('products.index');
+
 });
 
 require __DIR__.'/settings.php';
